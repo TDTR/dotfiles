@@ -1,0 +1,149 @@
+;;; THIS IS A BASIC INIT.EL FOR TORUTSUDA 2011/06/29
+;;; UPDATE 2011/12/03 -> cursor & init flame size
+
+(set-language-environment 'Japanese)
+
+;;;　ロードパスの追加
+(setq load-path (append
+		 '("~/.emacs.d"
+		   "~./emacs.d/packages")
+		 load-path))
+
+;;;localeに合わせた環境の設定
+(set-locale-environment nil)
+
+;;; 初期フレームの設定
+(setq initial-frame-alist
+      (append
+       '((top    . 22)
+	 (left   . 0)
+	 (width  . 81)
+	 (height . 44))
+       initial-frame-alist))
+(setq default-frame-alist
+      (append
+       '((width    . 81)
+	 (height   . 44))
+       default-frame-alist))
+
+;;; キーバインド
+(define-key global-map (kbd "C-z") 'undo) ;undo
+(define-key global-map (kbd "M-C-g") 'grep) ;grep
+(define-key global-map (kbd "C-[ M-C-g") 'goto-line) ;指定行へ移動
+
+;;; 再帰的grep
+(require 'grep)
+(setq grep-command-before-query "grep -nH -r -e ")
+(defun grep-default-command ()
+  (if current-prefix-arg
+      (let ((grep-command-before-target
+             (concat grep-command-before-query
+                     (shell-quote-argument (grep-tag-default)))))
+        (cons (if buffer-file-name
+                  (concat grep-command-before-target
+                          " *."
+                          (file-name-extension buffer-file-name))
+                (concat grep-command-before-target " ."))
+              (+ (length grep-command-before-target) 1)))
+    (car grep-command)))
+(setq grep-command (cons (concat grep-command-before-query " .")
+                         (+ (length grep-command-before-query) 1)))
+
+;;;カーソルの点滅を止める
+(blink-cursor-mode 0)
+
+;;; 対応する括弧を光らせる。
+(show-paren-mode 1)
+;;; ウィンドウ内に収まらないときだけ括弧内も光らせる。
+(setq show-paren-style 'mixed)
+
+;;; 最終行に必ず一行挿入する
+(setq require-final-newline t)
+
+;;; バックアップファイルを作らない
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+(setq delete-auto-save-files t)
+
+;; 行番号を表示
+(line-number-mode t)
+;; カーソル位置の指定
+(column-number-mode t)
+
+;;起動画面消えろ
+(setq inhibit-startup-message t)
+;;C-k は改行も消える
+(setq kill-whole-line t)
+
+;;; 終了時にオートセーブファイルを消す
+(setq delete-auto-save-files t)
+
+;;; 補完時に大文字小文字を区別しない
+(setq completion-ignore-case t)
+(setq read-file-name-completion-ignore-case t)
+
+;;; 部分一致の補完機能を使う
+;;; p-bでprint-bufferとか
+(partial-completion-mode t)
+
+;;; ファイル名が重複していたらディレクトリ名を追加する。
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
+;;; 標準Elispの設定
+;;;(load "config/builtins")
+
+;;; 非標準Elispの設定
+;;;(load "config/packages")
+
+;; フォントの設定
+;;01234567890123456789
+;;あいうえおかきくけこ
+;;1920 * 1200 もにた
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;(set-face-attribute 'default nil
+;;		    :family "さざなみゴシック"
+;;		    :height 108
+;;		    )
+
+;; Pythonテンプレート auto-insert
+(setq auto-insert-directory "~/.emacs.d/template/")
+(auto-insert-mode 1)
+(setq auto-insert-query nil)
+;;(define-auto-insert "\\.py\\'" "template.py")
+;;(add-hook 'find-file-hooks 'auto-insert)
+
+
+;;auto-complete設定
+(add-to-list 'load-path "~/.emacs.d/elisp/")
+(add-to-list 'load-path "~/.emacs.d")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(ac-config-default)
+
+;;python
+;;(add-to-list 'load-path "~/.emacs.d/elisp/")
+(require 'python-mode)
+(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+(setq interpreter-mode-alist (cons '("python" . python-mode)
+                                   interpreter-mode-alist))
+(autoload 'python-mode "python-mode" "Python editing mode." t)
+(setq ipython-command "/usr/local/bin/ipython")
+(require 'ipython)
+(setq auto-insert-alist
+      '((python-mode . "template.py")))
+
+;;yatex
+(setq auto-mode-alist
+      (cons (cons "¥¥.tex$" 'yatex-mode) auto-mode-alist))
+(autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
+(setq tex-command "platex")
+(setq YaTeX-use-hilit10 nil
+      YaTeX-use-font-lock t)
+
+;; 何か最後がいいらしい
+(set-default-coding-systems 'utf-8)
+(prefer-coding-system 'utf-8)
+
+
