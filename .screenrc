@@ -1,0 +1,17 @@
+# 256色表示
+term xterm-256color
+# コマンドキー変更
+escape ^Tt
+# 画面全体の点滅の消去
+vbell off
+# 端末のoff 時に出タッチ
+autodetach on
+# startup_message 消去
+startup_message off
+# encoding
+defutf8 on
+defkanji utf-8
+encoding utf-8 utf-8
+defencoding utf-8
+
+
