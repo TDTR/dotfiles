@@ -21,21 +21,29 @@ umask 022
 #alias mkdir ='nocorrect mkdir'
 alias ls="ls -GF"
 alias grep=egrep
-#alias ll ="ls -l"
 alias la="ls -lhAF --color=auto"
-alias emacs="/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs"
+
+case "${OSTYPE}" in
+# mac(unix)
+darwin*)
+   alias emacs="/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs"
+   alias pdf="/Applications/Preview.app/Contents/MacOS/Preview"
+   manpath="($X11HOME/man /usr/share/man/ /usr/local/share/man/)"
+   export MANPATH
+   ;;
+#linux
+linux*)
+   alias E="emacsclient -t"
+   alias kill-emacs='emacsclient -e "(kill-emacs)"'
+   ;;
+esac
+
 #search .file
-alias pdf="/Applications/Preview.app/Contents/MacOS/Preview"
-alias lsa="ls -ld .*"
 
 #PROMPT
-PROMPT="%m%# "
-RPROMPT=" %~"
+PROMPT='%m%# '
+RPROMPT=' %~'
 
-#man directory path
-#manpath=($X11HOME/man /usr/man /usr/lang/man /usr/local/man)
-manpath=($X11HOME/man /usr/share/man/ /usr/local/share/man/) 
-export MANPATH
 
 HISTSIZE=2000
 SAVEHIST=10000
