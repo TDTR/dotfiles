@@ -60,7 +60,7 @@
 (setq grep-command (cons (concat grep-command-before-query " .")
                          (+ (length grep-command-before-query) 1)))
 
-;s;画像表示
+;;画像表示
 (auto-image-file-mode t)
 
 ;;;カーソルの点滅を止める
@@ -102,6 +102,8 @@
 ;;C-k は改行も消える
 (setq kill-whole-line t)
 
+;;タイトルバーにファイルのフルパスを表示
+(setq frame-title-format "%F:%b")
 ;;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
 
@@ -131,18 +133,41 @@
 ;;; 非標準Elispの設定
 ;;;(load "config/packages")
 
-;; フォントの設定
+;;フォントの設定
 ;;01234567890123456789
 ;;あいうえおかきくけこ
 ;;1920 * 1200 もにた
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(set-face-attribute 'default nil
-		    :family "さざなみゴシック"
-;		    :family "Monaco"
-;		    :height 110
+(when (eq system-type 'darwin)
+  (require 'ucs-normalize)
+  (set-file-name-coding-system 'utf-8-hfs)
+  (setq locale-coding-system 'utf-8-hfs)
+  (set-face-attribute 'default nil
+		    :family "Ricty"
+		    ;:family "RictyDiscord"
+		    ;:family "Sazanami Gothic"
+	      	    ;:family "Monaco"
+       		    ;height 110
 		    :height 120
 		    )
+  ;; Rictyfontで豆腐が大量発生する悲しみから逃れる復活の呪文
+  (when (x-list-fonts "Ricty")
+    (let* ((size 14)
+	   (asciifont "Ricty")
+	   (jpfont "Ricty")
+	   (h (* size 10))
+	   (fontspec)
+	   (jp-fontspec))
+      (set-face-attribute 'default nil :family asciifont :height h)
+      (setq fontspec (font-spec :family asciifont))
+      (setq jp-fontspec (font-spec :family jpfont))
+      (set-fontset-font nil 'japanese-jisx0208 jp-fontspec)
+      (set-fontset-font nil 'japanese-jisx0212 jp-fontspec)
+      (set-fontset-font nil 'japanese-jisx0213-1 jp-fontspec)
+      (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
+      (set-fontset-font nil '(#x0080 . #x024F) fontspec)
+      (set-fontset-font nil '(#x0370 . #x03FF) fontspec)))
+)
 
 ;; Pythonテンプレート auto-insert
 (setq auto-insert-directory "~/.emacs.d/template/")
@@ -150,7 +175,6 @@
 (setq auto-insert-query nil)
 ;;(define-auto-insert "\\.py\\'" "template.py")
 ;;(add-hook 'find-file-hooks 'auto-insert)
-
 
 ;;auto-complete設定
 (add-to-list 'load-path "~/.emacs.d/elisp/")
