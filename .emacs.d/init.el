@@ -84,7 +84,7 @@
 ;; カーソル位置の指定
 (column-number-mode t)
 ;;; 現在の行を目立たせる
-(global-hl-line-mode)
+;;;(global-hl-line-mode)
 
 ;;行
 ;;;行の先頭でC-kを一回押すだけで行全体を消去する

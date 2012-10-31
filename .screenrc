@@ -14,4 +14,6 @@ defkanji utf-8
 encoding utf-8 utf-8
 defencoding utf-8
 
+scrollback 4000
 
+termcapinfo xterm ti@:te@

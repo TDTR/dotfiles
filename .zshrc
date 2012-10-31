@@ -1,4 +1,6 @@
 #  ‰¥∞µ°«ΩON
+source ~/profile/.zshrc
+
 autoload -U compinit
 compinit
 
@@ -19,7 +21,7 @@ umask 022
 #alias mv ='nocorrect mv'
 #alias cp ='nocorrect cp'
 #alias mkdir ='nocorrect mkdir'
-alias ls="ls -GF"
+alias ls="ls -GF --color=auto"
 alias grep=egrep
 alias la="ls -lhAF --color=auto"
 
