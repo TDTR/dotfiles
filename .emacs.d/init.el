@@ -250,6 +250,9 @@
   (define-key anything-map (kbd "C-M-p") 'anything-previous-source)
   (setq browse-url-browser-function original-browse-url-browser-function))
 
+;; anything-bib
+(require 'anything-bibtex)
+
 ;;C
 ;; 2012-03-18
 ;; c-modeやc++-modeなどcc-modeベースのモード共通の設定
