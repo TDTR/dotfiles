@@ -18,7 +18,7 @@
 (setq initial-frame-alist
       (append
        '((top    . 22)
-	 (left   . 650)
+	 (left   . 0)
 	 (width  . 125)
 	 (height . 65))
        initial-frame-alist))
@@ -81,6 +81,9 @@
 
 ;; 行番号を表示
 (line-number-mode t)
+;; F9 で行番号を表示
+(global-set-key [f9] 'linum-mode)
+
 ;; カーソル位置の指定
 (column-number-mode t)
 ;;; 現在の行を目立たせる
@@ -250,6 +253,15 @@
   (define-key anything-map (kbd "C-M-p") 'anything-previous-source)
   (setq browse-url-browser-function original-browse-url-browser-function))
 
+;; anything-bib
+(require 'anything-bibtex)
+
+;; key-comboで幸せになる 
+;; http://d.hatena.ne.jp/uk-ar/20111208/1322572618%3E
+(require 'key-combo)
+(key-combo-load-default)
+(key-combo-define-global (kbd "{") '("{`!!'}"))
+(key-combo-define-global (kbd "{}") "{}")
 ;;C
 ;; 2012-03-18
 ;; c-modeやc++-modeなどcc-modeベースのモード共通の設定
