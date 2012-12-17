@@ -259,9 +259,13 @@
 ;; key-comboで幸せになる 
 ;; http://d.hatena.ne.jp/uk-ar/20111208/1322572618%3E
 (require 'key-combo)
-(key-combo-load-default)
+(key-combo-define-global (kbd "=")'(" = " " == "))
+(key-combo-define-global (kbd "=>") " => ")
+(key-combo-define-global (kbd ">") " > ")
+(key-combo-define-global (kbd ">=") " >= ")
 (key-combo-define-global (kbd "{") '("{`!!'}"))
 (key-combo-define-global (kbd "{}") "{}")
+   
 ;;C
 ;; 2012-03-18
 ;; c-modeやc++-modeなどcc-modeベースのモード共通の設定

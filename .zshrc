@@ -21,20 +21,21 @@ umask 022
 #alias mv ='nocorrect mv'
 #alias cp ='nocorrect cp'
 #alias mkdir ='nocorrect mkdir'
-alias ls="ls -GF --color=auto"
 alias grep=egrep
 alias la="ls -lhAF --color=auto"
 
 case "${OSTYPE}" in
 # mac(unix)
 darwin*)
+   alias ls="ls -GF"
    alias emacs="/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs"
    alias pdf="/Applications/Preview.app/Contents/MacOS/Preview"
-   manpath="($X11HOME/man /usr/share/man/ /usr/local/share/man/)"
+   manpath="/opt/local/man:/opt/local/share/man:/usr/share/man:/usr/bin/man:/usr/X11/man:/usr/X11/share/man:/usr/share/man"
    export MANPATH
    ;;
 #linux
 linux*)
+   alias ls="ls -GF --color=auto"
    alias E="emacsclient -t"
    alias kill-emacs='emacsclient -e "(kill-emacs)"'
    ;;
