@@ -16,5 +16,6 @@ defencoding utf-8
 
 scrollback 4000
 
+termcapinfo linux ti@:te@
 termcapinfo xterm ti@:te@
-mousetrack on
+termcapinfo xterm-color ti@:te@
